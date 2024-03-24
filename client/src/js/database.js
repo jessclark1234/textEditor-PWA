@@ -15,15 +15,14 @@ const initdb = async () =>
 // TODO: Add logic to a method that accepts some content and adds it to the database
 export const putDb = async (content) => {
 
-  console.error('putDb not implemented');
 
-  const callDb = await openDB('content', 1);
+  const callDb = await openDB('jate', 1);
 
-  const text = callDb.transaction('content', 'readwrite');
+  const text = callDb.transaction('jate', 'readwrite');
 
-  const storeText = text.objectStore('content');
+  const storeText = text.objectStore('jate');
 
-  const requestText = storeText.add({});
+  const requestText = storeText.put({value: content, id: 1});
 
   const result = await requestText;
   console.log('Saved to database', result);
@@ -32,17 +31,17 @@ export const putDb = async (content) => {
 export const getDb = async () => {
   console.log('GET from the database');
 
-  const callDb = await openDB('content', 1);
+  const callDb = await openDB('jate', 1);
 
-  const text = callDb.transaction('content', 'readwrite');
+  const text = callDb.transaction('jate', 'readwrite');
 
-  const storeText = text.objectStore('content');
+  const storeText = text.objectStore('jate');
 
-  const requestText = storeText.getAll();
+  const requestText = storeText.get(1);
 
   const result = await requestText;
-  console.log('result.value', result);
-  return result;
+  console.log('result.value', result.value);
+  return result?.value;
 }
 
 
